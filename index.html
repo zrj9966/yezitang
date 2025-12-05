@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>椰树牌椰子糖 · 扫码信息</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #f6d54b;
+      --amber: #f79922;
+      --green: #0f8a5f;
+      --deep: #0c1f16;
+      --card: rgba(255, 255, 255, 0.08);
+      --stroke: rgba(255, 255, 255, 0.15);
+      --text: #fdfbf3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans SC", "Space Grotesk", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(246, 213, 75, 0.18), transparent 32%),
+                  radial-gradient(circle at 80% 10%, rgba(15, 138, 95, 0.3), transparent 34%),
+                  linear-gradient(145deg, #0b140f, #13281c 65%, #0b140f);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+    }
+    .page {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      padding: 18px 18px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .floating {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .floating span {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(145deg, rgba(246, 213, 75, 0.8), rgba(247, 153, 34, 0.7));
+      filter: blur(18px);
+      border-radius: 30px;
+      animation: drift 12s ease-in-out infinite;
+      opacity: 0.28;
+    }
+    .floating span:nth-child(1) { top: 8%; left: -20px; animation-delay: 0s; }
+    .floating span:nth-child(2) { bottom: 12%; right: -10px; animation-delay: 2s; background: linear-gradient(145deg, rgba(15, 138, 95, 0.8), rgba(246, 213, 75, 0.6)); }
+    .floating span:nth-child(3) { top: 46%; left: 40%; animation-delay: 3.5s; width: 70px; height: 70px; }
+    @keyframes drift {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.05); }
+    }
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 6px 4px 18px;
+    }
+    .pill {
+      align-self: flex-start;
+      background: rgba(246, 213, 75, 0.15);
+      border: 1px solid rgba(246, 213, 75, 0.35);
+      color: var(--gold);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 0.4px;
+      line-height: 1.25;
+    }
+    h1 strong { color: var(--gold); }
+    .lede {
+      margin: 0;
+      color: rgba(253, 251, 243, 0.8);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      padding: 18px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(246, 213, 75, 0.14), rgba(15, 138, 95, 0.12));
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .card + .card { margin-top: 14px; }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .label {
+      font-size: 13px;
+      color: rgba(253, 251, 243, 0.7);
+    }
+    .badge {
+      background: rgba(15, 138, 95, 0.16);
+      color: #b0f1d7;
+      padding: 6px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      border: 1px solid rgba(15, 138, 95, 0.35);
+    }
+    .product {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 14px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .product .thumb {
+      width: 84px;
+      height: 84px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #0f8a5f, #f6d54b);
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .thumb::after, .thumb::before {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+    .thumb::after {
+      width: 72px;
+      height: 72px;
+      transform: rotate(-18deg);
+    }
+    .thumb::before {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.45);
+      mix-blend-mode: screen;
+      top: 18px;
+      right: 12px;
+    }
+    .thumb span {
+      font-weight: 700;
+      font-size: 18px;
+      text-align: center;
+      color: #0c1f16;
+      line-height: 1.2;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.35);
+    }
+    .product .info {
+      display: grid;
+      gap: 6px;
+    }
+    .info .title {
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.4px;
+    }
+    .info .desc {
+      color: rgba(253, 251, 243, 0.7);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .price-row strong {
+      font-size: 22px;
+      color: var(--gold);
+      letter-spacing: 0.4px;
+    }
+    .code-block {
+      margin-top: 8px;
+      padding: 12px 14px;
+      border: 1px dashed rgba(253, 251, 243, 0.35);
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .code {
+      font-family: "Space Grotesk", monospace;
+      letter-spacing: 0.14em;
+      font-size: 15px;
+    }
+    .mini {
+      font-size: 12px;
+      color: rgba(253, 251, 243, 0.65);
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+    .ghost-btn {
+      background: rgba(246, 213, 75, 0.1);
+      color: var(--gold);
+      border: 1px solid rgba(246, 213, 75, 0.4);
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      min-width: 72px;
+    }
+    .ghost-btn:active { transform: scale(0.98); }
+    .pay-card {
+      display: grid;
+      gap: 12px;
+    }
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pill-row .method {
+      flex: 1 1 46%;
+      min-width: 140px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--stroke);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .method::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(125deg, rgba(246, 213, 75, 0.08), rgba(15, 138, 95, 0.08));
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .method:hover::after { opacity: 1; }
+    .method .icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: rgba(246, 213, 75, 0.15);
+      border: 1px solid rgba(246, 213, 75, 0.4);
+      color: #0c1f16;
+      font-weight: 800;
+    }
+    .method .text {
+      display: grid;
+      gap: 2px;
+      position: relative;
+      z-index: 1;
+    }
+    .method .text strong { font-size: 14px; }
+    .method .text span { font-size: 12px; color: rgba(253, 251, 243, 0.65); }
+    .cta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .primary {
+      flex: 1;
+      background: linear-gradient(145deg, #f6d54b, #f79922);
+      color: #0c1f16;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 16px;
+      box-shadow: 0 14px 30px rgba(246, 213, 75, 0.35);
+    }
+    .primary:active { transform: translateY(1px); }
+    .outline {
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(253, 251, 243, 0.35);
+      background: rgba(0, 0, 0, 0.15);
+      color: #fdfbf3;
+      flex: 1;
+      font-size: 15px;
+    }
+    .timeline {
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+    .step .dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: rgba(246, 213, 75, 0.14);
+      border: 1px solid rgba(246, 213, 75, 0.32);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .step .meta {
+      display: grid;
+      gap: 4px;
+    }
+    .meta strong { font-size: 14px; }
+    .meta span { font-size: 12px; color: rgba(253, 251, 243, 0.68); }
+    .footnote {
+      margin-top: 14px;
+      font-size: 12px;
+      color: rgba(253, 251, 243, 0.6);
+      text-align: center;
+      line-height: 1.5;
+    }
+    .timer {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      background: rgba(247, 153, 34, 0.15);
+      border: 1px solid rgba(247, 153, 34, 0.35);
+      border-radius: 12px;
+      font-size: 12px;
+      color: #ffdd9c;
+    }
+    @media (max-width: 420px) {
+      .product { grid-template-columns: 74px 1fr; }
+      .thumb { width: 74px; height: 74px; }
+      h1 { font-size: 24px; }
+      .pill-row .method { min-width: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="floating">
+      <span></span><span></span><span></span>
+    </div>
+    <header>
+      <div class="pill">Hainan Coconut Tree · QR Info</div>
+      <h1>椰树牌椰子糖 <strong>扫码信息</strong></h1>
+      <p class="lede">扫描包装二维码即可查看产品备案、规格与贮存说明。</p>
+    </header>
+
+    <section class="card">
+      <div class="card-header">
+        <span class="label">产品信息</span>
+        <span class="badge">海南椰树牌</span>
+      </div>
+      <div class="product">
+        <div class="thumb" aria-hidden="true">
+          <span>椰<br>子<br>糖</span>
+        </div>
+        <div class="info">
+          <div class="title">海南椰树牌椰子糖</div>
+          <div class="desc">天然椰浆、蔗糖熬制，不含香精、色素、防腐剂。</div>
+          <div class="mini">产地：海南省 · 食品类别：糖果类</div>
+        </div>
+      </div>
+      <div class="code-block">
+        <div>
+          <div class="label">产品备案编号</div>
+          <div class="code" id="record-code">海南食品备字2025067890</div>
+          <div class="mini">商品条码：09501101530003</div>
+        </div>
+        <div>
+          <button class="ghost-btn" id="copy-btn">复制备案号</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <span class="label">规格与贮存</span>
+        <span class="badge">扫码即阅 · 离线可见</span>
+      </div>
+      <div class="timeline">
+        <div class="step">
+          <div class="dot">1</div>
+          <div class="meta">
+            <strong>净含量/规格</strong>
+            <span>1000g · 散装家庭分享装</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot">2</div>
+          <div class="meta">
+            <strong>保质期</strong>
+            <span>24个月 · 请留意包装印制日期</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot">3</div>
+          <div class="meta">
+            <strong>贮存条件</strong>
+            <span>干燥、通风、阴凉、无异味环境；15-25℃，相对湿度50%-70%；避免阳光直射、高温高湿，与有异味物品分开；开封后需密封防潮。</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot">4</div>
+          <div class="meta">
+            <strong>成品成分与配料</strong>
+            <span>天然椰浆、蔗糖；不含香精、色素、添加防腐剂。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footnote">
+      品牌：海南椰树牌 · 产地：海南省 · 是否特殊用途食品：否。若信息有疑问，请联系客服或再次扫码核验。
+    </div>
+  </div>
+
+  <script>
+    // Copy record code for customer service or溯源码留档
+    const copyBtn = document.getElementById("copy-btn");
+    const codeEl = document.getElementById("record-code");
+
+    copyBtn?.addEventListener("click", () => {
+      const code = codeEl?.textContent?.trim();
+      if (!code) return;
+      navigator.clipboard.writeText(code).then(() => {
+        copyBtn.textContent = "已复制";
+        setTimeout(() => (copyBtn.textContent = "复制备案号"), 1400);
+      });
+    });
+  </script>
+</body>
+</html>
